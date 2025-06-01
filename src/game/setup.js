@@ -1,6 +1,9 @@
 import { Container, Assets } from 'pixi.js';
 
 import { appTextures } from '../common/assets.js';
+import createBoard from '../entities/board.js';
+import { createBtnStart, createLogo } from '../entities/index.js';
+import { stateBoard } from './stateGame.js';
 
 const createGameContainer = () => {
 	const container = new Container();
@@ -11,19 +14,32 @@ const createGameContainer = () => {
 
 const initializeGameElements = async (app) => {
 	const gameContainer = createGameContainer();
+	const logo = await createLogo(app);
+	const btnStart = await createBtnStart(app);
+	let board = null;
 	
-	return gameContainer
-}
+	gameContainer.addChild(logo, btnStart);
+	
+	btnStart.on('btn-start-clicked', async () => {
+		board = await createBoard(app);
+		
+		gameContainer.addChild(board);
+	});
+	
+	console.log(stateBoard);
+	
+	return gameContainer;
+};
 
 const runGame = async (app) => {
-	const gameContainer = await initializeGameElements(app)
-	app.stage.addChild(gameContainer)
-}
+	const gameContainer = await initializeGameElements(app);
+	app.stage.addChild(gameContainer);
+};
 
 export async function setupGame(app) {
 	try {
 		if (!appTextures || typeof appTextures !== 'object') {
-			throw new Error('appTextures не определен или имеет неверный формат')
+			throw new Error('appTextures не определен или имеет неверный формат');
 		}
 		
 		const loadPromises = Object.entries(appTextures).map(async ([textureId, url]) => {
@@ -34,6 +50,8 @@ export async function setupGame(app) {
 		await Promise.all(loadPromises);
 		
 		await runGame(app);
+		
+		document.getElementById('preloader').style.display = 'none';
 	} catch (error) {
 		console.error('Ошибка при инициализации игры:', error);
 		throw error;

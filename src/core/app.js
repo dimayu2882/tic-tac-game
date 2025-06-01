@@ -6,9 +6,11 @@ export async function createApp() {
 	const app = new Application();
 	
 	await app.init({
-		background: '#cc873a',
+		width: window.innerWidth,
+		height: window.innerHeight,
+		backgroundAlpha: 0,
 		antialias: true,
-		resizeTo: parent,
+		resizeTo: window,
 		autoDensity: true,
 		resolution: parent.devicePixelRatio || 1,
 	});

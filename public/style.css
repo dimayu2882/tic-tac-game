@@ -1,30 +1,45 @@
 body {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
+}
+
+#preloader {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: sans-serif;
+	font-size: 20px;
+	z-index: 10;
+}
+
+#preloader svg {
+    width: 50%;
 }
 
 #app {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 #pixi-container {
-    position: relative;
-    width: 100vw;
-    max-width: 1200px;
-    height: 100dvh;
-    max-height: 600px;
-    overflow: hidden;
+	position: relative;
+	width: 100vw;
+	height: 100dvh;
+	overflow: hidden;
 }
 
 canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	background-image: url('img/bg.svg');
+	background-size: cover;
 }
