@@ -5,6 +5,8 @@ export const allTextureKeys = {
 	zero: 'zero',
 	bg: 'bg',
 	logo: 'logo',
+	playerOne: 'playerOne',
+	playerTwo: 'playerTwo',
 };
 
 const appTextures = {
@@ -14,6 +16,8 @@ const appTextures = {
 	[allTextureKeys.zero]: 'img/zero.svg',
 	[allTextureKeys.bg]: 'img/bg.svg',
 	[allTextureKeys.logo]: 'img/logo.png',
+	[allTextureKeys.playerOne]: 'img/playerOne.png',
+	[allTextureKeys.playerTwo]: 'img/playerTwo.png',
 };
 
 export default appTextures;

@@ -2,8 +2,7 @@ import { Container, Assets } from 'pixi.js';
 
 import { appTextures } from '../common/assets.js';
 import createBoard from '../entities/board.js';
-import { createBtnStart, createLogo } from '../entities/index.js';
-import { stateBoard } from './stateGame.js';
+import { createBtnStart, createLogo, createPlayers } from '../entities/index.js'
 
 const createGameContainer = () => {
 	const container = new Container();
@@ -17,8 +16,9 @@ const initializeGameElements = async (app) => {
 	const logo = await createLogo(app);
 	const btnStart = await createBtnStart(app);
 	let board = null;
+	const players = await createPlayers(app);
 	
-	gameContainer.addChild(logo, btnStart);
+	gameContainer.addChild(logo, btnStart, players);
 	
 	btnStart.on('btn-start-clicked', async () => {
 		board = await createBoard(app);

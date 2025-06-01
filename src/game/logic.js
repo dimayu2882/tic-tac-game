@@ -68,6 +68,7 @@ export function highlightWinningCells(line) {
 	line.forEach(index => {
 		const cell = stateBoard[index];
 		cell.sprite.tint = 0x23C834;
+		console.log(cell);
 		cell.isWinning = true;
 	});
 }
