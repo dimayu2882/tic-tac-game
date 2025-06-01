@@ -1,11 +1,12 @@
 import { Container, Graphics } from 'pixi.js';
 
+import { handleCellClick } from '../game/logic.js';
 import { stateBoard } from '../game/stateGame.js';
 
 export default async function createBoard(app) {
 	const board = new Container();
 	
-	const cellSize = app.screen.width * 0.1;
+	const cellSize = app.screen.width * 0.15;
 	const gap = app.screen.width * 0.005;
 	const defaultColor = 0x843CE0;
 	const hoverColor = 0xA569BD;
@@ -20,6 +21,8 @@ export default async function createBoard(app) {
 	board.addChild(boardBg);
 	
 	for (let i = 0; i < stateBoard.length; i++) {
+		const cellContainer = new Container();
+		cellContainer.label = i;
 		const cell = stateBoard[i];
 		const graphics = new Graphics();
 		
@@ -29,29 +32,26 @@ export default async function createBoard(app) {
 		// позиционируем
 		const col = i % 3;
 		const row = Math.floor(i / 3);
-		graphics.x = gap * 2 + col * (cellSize + gap);
-		graphics.y = gap * 2 + row * (cellSize + gap);
+		cellContainer.position.set(gap * 2 + col * (cellSize + gap), gap * 2 + row * (cellSize + gap));
+		
+		graphics.x = 0;
+		graphics.y = 0;
 		
 		// сделать кликабельной
-		graphics.eventMode = 'static';
-		graphics.cursor = 'pointer';
+		cellContainer.eventMode = 'static';
+		cellContainer.cursor = 'pointer';
 		
-		graphics.on('pointerdown', () => {
-			console.log(`Клик по клетке [${cell.row}, ${cell.col}]`);
-			
-			// пример хода
-			if (cell.value === '') {
-				cell.value = 'X'; // или 'O'
-			}
+		cellContainer.on('pointerdown', () => {
+			handleCellClick(cell, cellContainer, cellSize);
 		});
 		
-		graphics.on('pointerover', () => {
+		cellContainer.on('pointerover', () => {
 			graphics.clear();
 			graphics.roundRect(0, 0, cellSize, cellSize, 10);
 			graphics.fill(hoverColor);
 		});
 		
-		graphics.on('pointerout', () => {
+		cellContainer.on('pointerout', () => {
 			graphics.clear();
 			graphics.roundRect(0, 0, cellSize, cellSize, 10);
 			graphics.fill(defaultColor);
@@ -60,7 +60,9 @@ export default async function createBoard(app) {
 		// сохранить спрайт
 		cell.sprite = graphics;
 		
-		board.addChild(graphics);
+		cellContainer.addChild(graphics);
+		
+		board.addChild(cellContainer);
 	}
 	
 	board.pivot.set(.5, .5);

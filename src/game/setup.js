@@ -26,8 +26,6 @@ const initializeGameElements = async (app) => {
 		gameContainer.addChild(board);
 	});
 	
-	console.log(stateBoard);
-	
 	return gameContainer;
 };
 

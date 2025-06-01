@@ -9,3 +9,9 @@ export const stateBoard = [
 	{ row: 2, col: 1, value: '', isWinning: false, sprite: null },
 	{ row: 2, col: 2, value: '', isWinning: false, sprite: null }
 ];
+
+export const gameState = {
+	currentPlayer: 'cross',
+	isGameOver: false,
+	winner: null
+};
