@@ -2,7 +2,7 @@ import { Container, Assets } from 'pixi.js';
 
 import { appTextures } from '../common/assets.js';
 import createBoard from '../entities/board.js';
-import { createBtnStart, createLogo, createPlayers } from '../entities/index.js'
+import { createBtnStart, createLogo, createPlayers } from '../entities/index.js';
 
 const createGameContainer = () => {
 	const container = new Container();
