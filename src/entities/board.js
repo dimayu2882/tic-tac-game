@@ -16,9 +16,10 @@ export default async function createBoard(app) {
 	boardBg.fill(0x391898);
 	boardBg.width = boardBg.width + gap * 4;
 	boardBg.height = boardBg.height + gap * 4;
-	boardBg.label = 'Board';
 	
 	board.addChild(boardBg);
+	board.label = 'board';
+	board.visible = false;
 	
 	for (let i = 0; i < stateBoard.length; i++) {
 		const cellContainer = new Container();
@@ -41,8 +42,25 @@ export default async function createBoard(app) {
 		cellContainer.eventMode = 'static';
 		cellContainer.cursor = 'pointer';
 		
+		// сохранить спрайт
+		cell.sprite = graphics;
+		
+		cellContainer.addChild(graphics);
+		
+		board.addChild(cellContainer);
+		
 		cellContainer.on('pointerdown', () => {
-			handleCellClick(cell, cellContainer, cellSize);
+			handleCellClick(cell, cellContainer, cellSize, app);
+			console.log(cellContainer.label);
+		});
+		
+		// эмитим своё событие наружу
+		cellContainer.emit('cellClick', {
+			index: i,
+			container: cellContainer,
+			cellData: cell
+		}, () => {
+			console.log('cellClick', cell);
 		});
 		
 		cellContainer.on('pointerover', () => {
@@ -56,13 +74,6 @@ export default async function createBoard(app) {
 			graphics.roundRect(0, 0, cellSize, cellSize, 10);
 			graphics.fill(defaultColor);
 		});
-		
-		// сохранить спрайт
-		cell.sprite = graphics;
-		
-		cellContainer.addChild(graphics);
-		
-		board.addChild(cellContainer);
 	}
 	
 	board.pivot.set(.5, .5);

@@ -1,5 +1,4 @@
 import { Container } from 'pixi.js';
-import { gsap } from 'gsap';
 
 import { allTextureKeys } from '../common/assets.js';
 import { createSprite } from '../helpers/index.js';
@@ -13,9 +12,11 @@ export default async function createPlayers(app) {
 	
 	playerOne.position.set(gap, 0);
 	playerOne.pivot.set(0.5);
+	playerOne.label = 'playerOne';
 	
 	playerTwo.position.set(app.screen.width - gap - playerTwo.width, 0);
 	playerTwo.pivot.set(0.5);
+	playerTwo.label = 'playerTwo';
 	
 	playersContainer.addChild(playerOne,  playerTwo);
 	

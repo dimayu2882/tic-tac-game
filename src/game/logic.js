@@ -1,18 +1,58 @@
 import { gsap } from 'gsap';
-import { createSprite } from '../helpers/index.js';
 
+import { createSprite, findByLabel, scaleTarget } from '../helpers/index.js';
 import { allTextureKeys } from '../common/assets.js';
 import { gameState, stateBoard } from './stateGame.js';
 
-export const handleCellClick = (cell, cellContainer, cellSize) => {
+export const logicWrapper = async (app) => {
+	const board = findByLabel(app.stage, 'board');
+	const button = findByLabel(app.stage, 'buttonStart');
+	const playerOne = findByLabel(app.stage, 'playerOne');
+	
+	button.on('pointerdown', () => {
+		scaleTarget(playerOne);
+		board.visible = true;
+	});
+};
+
+export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 	if (gameState.isGameOver || cell.value !== '') return;
+	
+	const gameOver = findByLabel(app.stage, 'gameOver');
+	const draw = findByLabel(app.stage, 'draw');
+	const trophy = findByLabel(app.stage, 'trophy');
+	
+	const playerOne = findByLabel(app.stage, 'playerOne');
+	const playerTwo = findByLabel(app.stage, 'playerTwo');
+	
+	function animateContainer(target) {
+		gsap.to(target.scale, {
+			duration: 1,
+			x: 1,
+			y: 1,
+			ease: 'back.out(1.7)',
+		});
+		
+		gsap.to(target, {
+			duration: 1,
+			rotation: Math.PI * 2,
+			ease: 'back.out(1.7)',
+		});
+	}
 	
 	cell.value = gameState.currentPlayer;
 	
 	let cellValue = null;
-	gameState.currentPlayer === 'cross'
-		? cellValue = createSprite(allTextureKeys.cross)
-		: cellValue = createSprite(allTextureKeys.zero);
+	if (gameState.currentPlayer === 'cross') {
+		cellValue = createSprite(allTextureKeys.cross);
+		scaleTarget(playerTwo);
+		gsap.killTweensOf(playerOne.scale);
+		
+	} else {
+		cellValue = createSprite(allTextureKeys.zero);
+		scaleTarget(playerOne);
+		gsap.killTweensOf(playerTwo.scale);
+	}
 	
 	if (cellValue) {
 		cellValue.label = cell.value;
@@ -35,10 +75,14 @@ export const handleCellClick = (cell, cellContainer, cellSize) => {
 		
 		if (result === 'draw') {
 			gameState.winner = null;
+			draw.visible = true;
+			animateContainer(gameOver);
+			
 		} else {
 			gameState.winner = result.winner;
 			highlightWinningCells(result.line);
-			console.log(gameState.winner);
+			trophy.visible = true;
+			animateContainer(gameOver);
 		}
 		return;
 	}
@@ -64,11 +108,11 @@ export const checkWinner = (board) => {
 	return isDraw ? 'draw' : null;
 };
 
-export function highlightWinningCells(line) {
+function highlightWinningCells(line) {
 	line.forEach(index => {
 		const cell = stateBoard[index];
 		cell.sprite.tint = 0x23C834;
-		console.log(cell);
 		cell.isWinning = true;
 	});
+	console.log(gameState);
 }

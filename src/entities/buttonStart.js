@@ -7,6 +7,7 @@ export default async function createBtnStart(app) {
 	button.buttonMode = true;
 	button.cursor = 'pointer';
 	button.pivot.set(0.5);
+	button.label = 'buttonStart';
 
 	const graphics = new Graphics();
 	graphics.roundRect(0, 0, 150, 50, 10);
@@ -37,10 +38,6 @@ export default async function createBtnStart(app) {
 		yoyo: true,
 		repeat: -1,
 		ease: 'sine.inOut',
-	});
-
-	button.on('pointerdown', () => {
-		button.emit('btn-start-clicked');
 	});
 	
 	return button;
