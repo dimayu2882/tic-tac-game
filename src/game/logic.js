@@ -1,3 +1,4 @@
+import { BlurFilter }  from 'pixi.js';
 import { gsap } from 'gsap';
 
 import { createSprite, findByLabel, scaleTarget } from '../helpers/index.js';
@@ -18,9 +19,13 @@ export const logicWrapper = async (app) => {
 export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 	if (gameState.isGameOver || cell.value !== '') return;
 	
+	const board = findByLabel(app.stage, 'board');
 	const gameOver = findByLabel(app.stage, 'gameOver');
 	const draw = findByLabel(app.stage, 'draw');
 	const trophy = findByLabel(app.stage, 'trophy');
+	const playerOneName = findByLabel(app.stage, 'playerOneName');
+	const playerTwoName = findByLabel(app.stage, 'playerTwoName');
+	const playAgainButton = findByLabel(app.stage, 'playAgainButton');
 	
 	const playerOne = findByLabel(app.stage, 'playerOne');
 	const playerTwo = findByLabel(app.stage, 'playerTwo');
@@ -73,6 +78,8 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 	if (result) {
 		gameState.isGameOver = true;
 		
+		board.filters = [new BlurFilter(8)];
+		
 		if (result === 'draw') {
 			gameState.winner = null;
 			draw.visible = true;
@@ -80,9 +87,12 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 			
 		} else {
 			gameState.winner = result.winner;
-			highlightWinningCells(result.line);
+			highlightWinningCells(result.line, playerOneName, playerTwoName);
 			trophy.visible = true;
 			animateContainer(gameOver);
+			console.log(gameState.winner);
+			
+			gameState.winner === 'cross' ? animateContainer(playerOneName) : animateContainer(playerTwoName);
 		}
 		return;
 	}
@@ -114,5 +124,4 @@ function highlightWinningCells(line) {
 		cell.sprite.tint = 0x23C834;
 		cell.isWinning = true;
 	});
-	console.log(gameState);
 }
