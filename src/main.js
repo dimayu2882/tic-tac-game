@@ -50,20 +50,54 @@ export async function startGame() {
 	
 	isGameStarting = true;
 	
-	if (app) {
-		await resetGame(app);
-	} else {
+	try {
+		if (app) {
+			console.log('Resetting existing app...');
+			await resetGame(app);
+		} else {
+			console.log('Creating new app...');
+			
+			const container = document.getElementById('pixi-container');
+			console.log('Container found:', !!container);
+			
+			if (!container) {
+				throw new Error('pixi-container element not found');
+			}
+			
+			container.innerHTML = '';
+			
+			console.log('Creating PIXI app...');
+			app = await createApp();
+			console.log('PIXI app created successfully');
+			
+			if (!app.canvas) {
+				throw new Error('Canvas not created');
+			}
+			
+			container.appendChild(app.canvas);
+		}
 		
-		const container = document.getElementById('pixi-container');
+		await loadAppAssets();
+		await setupGame(app);
 		
-		container.innerHTML = '';
-		app = await createApp();
+	} catch (error) {
+		console.error('Error starting game:', error);
 		
-		container.appendChild(app.canvas);
+		// Показать ошибку пользователю
+		const preloader = document.getElementById('preloader');
+		if (preloader) {
+			preloader.innerHTML = `
+        <div style="color: red; padding: 20px; background: white; border: 1px solid red;">
+          <h3>Ошибка загрузки игры</h3>
+          <p>${error.message}</p>
+          <button onclick="location.reload()" style="padding: 10px; margin-top: 10px;">Перезагрузить</button>
+        </div>
+      `;
+		}
+		throw error;
+	} finally {
+		isGameStarting = false;
 	}
-	
-	await loadAppAssets();
-	await setupGame(app);
 }
 
 export async function restartGame() {
