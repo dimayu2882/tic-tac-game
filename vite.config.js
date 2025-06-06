@@ -1,19 +1,25 @@
 import { defineConfig } from 'vite';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
+	base: './',
 	server: {
-		port: 3001,
+		port: 8080,
 		open: true
 	},
 	build: {
+		assetsDir: 'assets',
+		rollupOptions: {
+			output: {
+				assetFileNames: 'assets/[name].[hash][extname]'
+			}
+		},
 		sourcemap: true,
 		target: 'esnext' // или 'es2022'
+	},
+	define: {
+		'process.env.NODE_ENV': JSON.stringify('production')
 	},
 	esbuild: {
 		target: 'esnext'
 	}
-})
+});

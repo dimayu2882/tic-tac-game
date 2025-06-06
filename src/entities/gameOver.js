@@ -1,4 +1,4 @@
-import { gsap } from 'gsap'
+import { gsap } from 'gsap';
 import { Container, Graphics, Text } from 'pixi.js';
 
 import { createSprite } from '../helpers';
