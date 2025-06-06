@@ -1,9 +1,12 @@
 import { BlurFilter }  from 'pixi.js';
 import { gsap } from 'gsap';
 
+import { restartGame } from '../main.js';
 import { createSprite, findByLabel, scaleTarget } from '../helpers/index.js';
 import { allTextureKeys } from '../common/assets.js';
 import { gameState, stateBoard } from './stateGame.js';
+
+let isPlayAgainButtonSetup = false; // Флаг для отслеживания
 
 export const logicWrapper = async (app) => {
 	const board = findByLabel(app.stage, 'board');
@@ -29,6 +32,14 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 	
 	const playerOne = findByLabel(app.stage, 'playerOne');
 	const playerTwo = findByLabel(app.stage, 'playerTwo');
+	
+	// Устанавливаем обработчик только один раз
+	if (!isPlayAgainButtonSetup) {
+		playAgainButton.on('pointerdown', () => {
+			restartGame();
+		});
+		isPlayAgainButtonSetup = true;
+	}
 	
 	function animateContainer(target) {
 		gsap.to(target.scale, {
@@ -78,7 +89,7 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 	if (result) {
 		gameState.isGameOver = true;
 		
-		board.filters = [new BlurFilter(8)];
+		board.filters = [new BlurFilter({ strength: 4 })];
 		
 		if (result === 'draw') {
 			gameState.winner = null;
@@ -90,7 +101,6 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 			highlightWinningCells(result.line, playerOneName, playerTwoName);
 			trophy.visible = true;
 			animateContainer(gameOver);
-			console.log(gameState.winner);
 			
 			gameState.winner === 'cross' ? animateContainer(playerOneName) : animateContainer(playerTwoName);
 		}
@@ -100,6 +110,12 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 	gameState.currentPlayer = gameState.currentPlayer === 'cross' ? 'zero' : 'cross';
 };
 
+// Функция для сброса флага при рестарте
+export const resetPlayAgainButton = () => {
+	isPlayAgainButtonSetup = false;
+};
+
+// Функция проверки выигрыша
 export const checkWinner = (board) => {
 	const winLines = [
 		[0, 1, 2], [3, 4, 5], [6, 7, 8], // строки

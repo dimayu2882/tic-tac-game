@@ -15,10 +15,8 @@ export async function createApp() {
 		resolution: parent.devicePixelRatio || 1,
 	});
 	
-	// Store the application in the global scope for debugging purposes
 	globalThis.__PIXI_APP__ = app;
 	await initDevtools({ app });
 	
-	document.getElementById('pixi-container').appendChild(app.canvas);
 	return app;
 }
