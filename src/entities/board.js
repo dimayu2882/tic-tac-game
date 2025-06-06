@@ -51,7 +51,6 @@ export default async function createBoard(app) {
 		
 		cellContainer.on('pointerdown', () => {
 			handleCellClick(cell, cellContainer, cellSize, app);
-			console.log(cellContainer.label);
 		});
 		
 		// эмитим своё событие наружу
