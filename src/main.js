@@ -52,23 +52,16 @@ export async function startGame() {
 	
 	try {
 		if (app) {
-			console.log('Resetting existing app...');
 			await resetGame(app);
 		} else {
-			console.log('Creating new app...');
-			
 			const container = document.getElementById('pixi-container');
-			console.log('Container found:', !!container);
 			
 			if (!container) {
 				throw new Error('pixi-container element not found');
 			}
 			
 			container.innerHTML = '';
-			
-			console.log('Creating PIXI app...');
 			app = await createApp();
-			console.log('PIXI app created successfully');
 			
 			if (!app.canvas) {
 				throw new Error('Canvas not created');
@@ -81,7 +74,6 @@ export async function startGame() {
 		await setupGame(app);
 		
 	} catch (error) {
-		console.error('Error starting game:', error);
 		
 		// Показать ошибку пользователю
 		const preloader = document.getElementById('preloader');
