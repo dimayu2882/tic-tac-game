@@ -3,7 +3,7 @@ import { Container, Graphics } from 'pixi.js';
 import { handleCellClick } from '../game/logic.js';
 import { stateBoard } from '../game/stateGame.js';
 
-export default async function createBoard(app) {
+export default function createBoard(app) {
 	const board = new Container();
 	
 	const cellSize = app.screen.width * 0.15;

@@ -1,5 +1,6 @@
 import { Container } from 'pixi.js';
-import { createBtnStart, createContainerGameOver, createLogo, createPlayers, createBoard } from '../entities/index.js';
+import { createBoard, createBtnStart, createContainerGameOver, createLogo, createPlayers } from '../entities/index.js';
+import { loadAppAssets } from './loadAppAssets.js';
 import { logicWrapper } from './logic.js';
 
 const createGameContainer = () => {
@@ -9,6 +10,9 @@ const createGameContainer = () => {
 };
 
 const initializeGameElements = async (app) => {
+	// Сначала загружаем все ассеты
+	await loadAppAssets();
+	
 	const gameContainer = createGameContainer();
 	
 	const logo = await createLogo(app);

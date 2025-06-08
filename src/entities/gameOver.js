@@ -4,14 +4,14 @@ import { Container, Graphics, Text } from 'pixi.js';
 import { createSprite } from '../helpers';
 import { allTextureKeys } from '../common/assets.js';
 
-export default async function createContainerGameOver(app) {
+export default function createContainerGameOver(app) {
 	const container = new Container();
 	container.label = 'gameOver';
 	
-	const trophy = await createSprite(allTextureKeys.trophy);
+	const trophy = createSprite(allTextureKeys.trophy);
 	trophy.label =  'trophy';
 	
-	const draw = await createSprite(allTextureKeys.draw);
+	const draw = createSprite(allTextureKeys.draw);
 	draw.label = 'draw';
 	
 	const bg = new Graphics();

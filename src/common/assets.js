@@ -5,8 +5,8 @@ export const allTextureKeys = {
 	zero: 'zero',
 	bg: 'bg',
 	logo: 'logo',
-	playerOne: 'playOne',
-	playerTwo: 'playTwo',
+	playerOne: 'playerOne',
+	playerTwo: 'playerTwo',
 };
 
 export const appTextures = {

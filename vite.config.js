@@ -14,7 +14,7 @@ export default defineConfig({
 			}
 		},
 		sourcemap: true,
-		target: 'esnext' // или 'es2022'
+		target: 'esnext'
 	},
 	define: {
 		'process.env.NODE_ENV': JSON.stringify('production')

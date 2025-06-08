@@ -1,14 +1,12 @@
-import { BlurFilter }  from 'pixi.js';
 import { gsap } from 'gsap';
-
-import { restartGame } from '../main.js';
-import { createSprite, findByLabel, scaleTarget } from '../helpers/index.js';
+import { BlurFilter } from 'pixi.js';
 import { allTextureKeys } from '../common/assets.js';
+import { createSprite, findByLabel, scaleTarget } from '../helpers/index.js';
 import { gameState, stateBoard } from './stateGame.js';
 
 let isPlayAgainButtonSetup = false; // Флаг для отслеживания
 
-export const logicWrapper = async (app) => {
+export const logicWrapper = async app => {
 	const board = findByLabel(app.stage, 'board');
 	const button = findByLabel(app.stage, 'buttonStart');
 	const playerOne = findByLabel(app.stage, 'playerOne');
@@ -46,13 +44,13 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 			duration: 1,
 			x: 1,
 			y: 1,
-			ease: 'back.out(1.7)',
+			ease: 'back.out(1.7)'
 		});
 		
 		gsap.to(target, {
 			duration: 1,
 			rotation: Math.PI * 2,
-			ease: 'back.out(1.7)',
+			ease: 'back.out(1.7)'
 		});
 	}
 	
@@ -63,7 +61,6 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 		cellValue = createSprite(allTextureKeys.cross);
 		scaleTarget(playerTwo);
 		gsap.killTweensOf(playerOne.scale);
-		
 	} else {
 		cellValue = createSprite(allTextureKeys.zero);
 		scaleTarget(playerOne);
@@ -77,10 +74,14 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 		cellValue.height = cellContainer.width / 1.5;
 		cellValue.position.set(cellSize / 2, cellSize / 2);
 		
-		gsap.fromTo(cellValue.scale, {
-			y: 0,
-			x: 0,
-		}, { y: 1, x: 1 });
+		gsap.fromTo(
+			cellValue.scale,
+			{
+				y: 0,
+				x: 0
+			},
+			{ y: 1, x: 1 }
+		);
 		cellContainer.addChild(cellValue);
 	}
 	
@@ -95,19 +96,21 @@ export const handleCellClick = async (cell, cellContainer, cellSize, app) => {
 			gameState.winner = null;
 			draw.visible = true;
 			animateContainer(gameOver);
-			
 		} else {
 			gameState.winner = result.winner;
 			highlightWinningCells(result.line, playerOneName, playerTwoName);
 			trophy.visible = true;
 			animateContainer(gameOver);
 			
-			gameState.winner === 'cross' ? animateContainer(playerOneName) : animateContainer(playerTwoName);
+			gameState.winner === 'cross'
+				? animateContainer(playerOneName)
+				: animateContainer(playerTwoName);
 		}
 		return;
 	}
 	
-	gameState.currentPlayer = gameState.currentPlayer === 'cross' ? 'zero' : 'cross';
+	gameState.currentPlayer =
+		gameState.currentPlayer === 'cross' ? 'zero' : 'cross';
 };
 
 // Функция для сброса флага при рестарте
@@ -116,11 +119,16 @@ export const resetPlayAgainButton = () => {
 };
 
 // Функция проверки выигрыша
-export const checkWinner = (board) => {
+export const checkWinner = board => {
 	const winLines = [
-		[0, 1, 2], [3, 4, 5], [6, 7, 8], // строки
-		[0, 3, 6], [1, 4, 7], [2, 5, 8], // столбцы
-		[0, 4, 8], [2, 4, 6]             // диагонали
+		[0, 1, 2],
+		[3, 4, 5],
+		[6, 7, 8], // строки
+		[0, 3, 6],
+		[1, 4, 7],
+		[2, 5, 8], // столбцы
+		[0, 4, 8],
+		[2, 4, 6] // диагонали
 	];
 	
 	for (const [a, b, c] of winLines) {
@@ -137,7 +145,7 @@ export const checkWinner = (board) => {
 function highlightWinningCells(line) {
 	line.forEach(index => {
 		const cell = stateBoard[index];
-		cell.sprite.tint = 0x23C834;
+		cell.sprite.tint = 0x23c834;
 		cell.isWinning = true;
 	});
 }

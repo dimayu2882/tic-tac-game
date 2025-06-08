@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { Container, Graphics, Text } from 'pixi.js';
 
-export default async function createBtnStart(app) {
+export default function createBtnStart(app) {
 	const button = new Container();
 	button.interactive = true;
 	button.buttonMode = true;
