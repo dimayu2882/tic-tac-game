@@ -39,9 +39,10 @@ export class Game {
 		const gameOver = createContainerGameOver(this.app);
 
 		this.gameContainer.addChild(logo, players, btnStart, board, gameOver);
-
 		this.app.stage.addChild(this.gameContainer);
 
 		return this.gameContainer;
 	};
+
+	restartGame = () => {};
 }
