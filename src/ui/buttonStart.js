@@ -1,5 +1,6 @@
-import { gsap } from 'gsap';
 import { Container, Graphics, Text } from 'pixi.js';
+import { gsap } from 'gsap';
+
 import { labels } from '../common/enums.js';
 
 export default function createBtnStart(app) {
@@ -7,8 +8,7 @@ export default function createBtnStart(app) {
 	button.interactive = true;
 	button.buttonMode = true;
 	button.cursor = 'pointer';
-	button.pivot.set(0.5);
-	button.label = labels.button_start;
+	button.label = labels.buttonStart;
 
 	const graphics = new Graphics();
 	graphics.roundRect(0, 0, 150, 50, 10);
@@ -29,8 +29,9 @@ export default function createBtnStart(app) {
 	buttonText.y = 50 / 2;
 	button.addChild(buttonText);
 
-	button.x = (app.screen.width - 150) / 2;
-	button.y = (app.screen.height - 50) / 2;
+	button.x = app.screen.width / 2;
+	button.y = app.screen.height / 2;
+	button.pivot.set(button.width / 2, button.height / 2);
 
 	gsap.to(button.scale, {
 		x: 1.05,

@@ -2,15 +2,16 @@ export const labels = {
 	game: 'game',
 	board: 'board',
 	logo: 'logo',
-	player_one: 'playerOne',
-	player_two: 'playerTwo',
-	button_start: 'buttonStart',
-	game_over: 'gameOver',
+	playersContainer: 'playersContainer',
+	playerOne: 'playerOne',
+	playerTwo: 'playerTwo',
+	buttonStart: 'buttonStart',
+	gameOver: 'gameOver',
 	trophy: 'trophy',
 	draw: 'draw',
-	player_one_name: 'playerOneName',
-	player_two_name: 'playerTwoName',
-	play_again_button: 'playAgainButton',
+	playerOneName: 'playerOneName',
+	playerTwoName: 'playerTwoName',
+	playAgainButton: 'playAgainButton',
 };
 
 export const gameValues = {

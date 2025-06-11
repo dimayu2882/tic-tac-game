@@ -19,11 +19,6 @@ export class AppGame {
 		globalThis.__PIXI_APP__ = app;
 		await initDevtools({ app });
 		
-		return app;
-	}
-	
-	async initAppGame() {
-		const app = await this.createApp();
 		const container = document.getElementById(CONTAINER_ID);
 		container.appendChild(app.canvas);
 		

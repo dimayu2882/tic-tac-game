@@ -1,5 +1,5 @@
-import { gsap } from 'gsap';
 import { Container, Graphics, Text } from 'pixi.js';
+import { gsap } from 'gsap';
 
 import { allTextureKeys } from '../common/assets.js';
 import { labels } from '../common/enums.js';
@@ -7,7 +7,7 @@ import { createSprite } from '../helpers';
 
 export default function createContainerGameOver(app) {
 	const container = new Container();
-	container.label = labels.game_over;
+	container.label = labels.gameOver;
 
 	const trophy = createSprite(allTextureKeys.trophy);
 	trophy.label = labels.trophy;
@@ -29,7 +29,7 @@ export default function createContainerGameOver(app) {
 			align: 'center',
 		},
 	});
-	playerOneName.label = labels.player_one_name;
+	playerOneName.label = labels.playerOneName;
 	playerOneName.anchor.set(0.5, 0.5);
 	playerOneName.position.set(bg.height / 2, bg.height / 6);
 
@@ -43,7 +43,7 @@ export default function createContainerGameOver(app) {
 			align: 'center',
 		},
 	});
-	playerTwoName.label = labels.player_two_name;
+	playerTwoName.label = labels.playerTwoName;
 	playerTwoName.anchor.set(0.5, 0.5);
 	playerTwoName.position.set(bg.height / 2, bg.height / 6);
 
@@ -52,7 +52,7 @@ export default function createContainerGameOver(app) {
 	playAgainButton.interactive = true;
 	playAgainButton.buttonMode = true;
 	playAgainButton.cursor = 'pointer';
-	playAgainButton.label = labels.play_again_button;
+	playAgainButton.label = labels.playAgainButton;
 
 	const graphics = new Graphics();
 	graphics.roundRect(0, 0, 150, 50, 10);

@@ -2,19 +2,22 @@ import { Assets, Container } from 'pixi.js';
 
 import { appTextures } from '../common/assets.js';
 import { PRELOADER_ID } from '../common/constants.js';
+import { labels } from '../common/enums.js';
+import { GameManager } from '../game/logic.js';
 import {
 	createBoard,
 	createBtnStart,
 	createContainerGameOver,
 	createLogo,
 	createPlayers,
-} from '../entities/index.js';
+} from '../ui/index.js';
 
 export class Game {
 	constructor(app) {
 		this.app = app;
 		this.preloader = document.getElementById(PRELOADER_ID);
 		this.gameContainer = new Container();
+		this.gameContainer.label = labels.game;
 	}
 
 	async loadAppAssets() {
@@ -22,27 +25,37 @@ export class Game {
 			throw new Error('appTextures не определен или имеет неверный формат');
 		}
 
-		for (const [key, url] of Object.entries(appTextures)) {
-			await Assets.load({ alias: key, src: url });
-		}
+		const assetBundles = Object.entries(appTextures).map(([key, url]) => ({
+			alias: key,
+			src: url,
+		}));
 
+		await Assets.load(assetBundles);
 		this.preloader.style.display = 'none';
 	}
 
 	initializeGameElements = async () => {
+		const { app } = this;
 		await this.loadAppAssets();
 
-		const logo = createLogo(this.app);
-		const players = createPlayers(this.app);
-		const btnStart = createBtnStart(this.app);
-		const board = createBoard(this.app);
-		const gameOver = createContainerGameOver(this.app);
+		const logo = createLogo(app);
+		const players = createPlayers(app);
+		const btnStart = createBtnStart(app);
+		const board = createBoard(app);
+		const gameOver = createContainerGameOver(app);
 
 		this.gameContainer.addChild(logo, players, btnStart, board, gameOver);
-		this.app.stage.addChild(this.gameContainer);
+		app.stage.addChild(this.gameContainer);
+
+		// Даем время на инициализацию всех элементов
+		await new Promise(resolve => {
+			window.requestAnimationFrame(() => {
+				window.requestAnimationFrame(resolve);
+			});
+		});
+
+		new GameManager(app).startGame();
 
 		return this.gameContainer;
 	};
-
-	restartGame = () => {};
 }

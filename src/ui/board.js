@@ -1,7 +1,7 @@
 import { Container, Graphics } from 'pixi.js';
 
 import { labels } from '../common/enums.js';
-import { handleCellClick } from '../game/logic.js';
+import { GameManager } from '../game/logic.js';
 import { stateBoard } from '../game/stateGame.js';
 
 export default function createBoard(app) {
@@ -54,21 +54,8 @@ export default function createBoard(app) {
 		board.addChild(cellContainer);
 
 		cellContainer.on('pointerdown', () => {
-			handleCellClick(cell, cellContainer, cellSize, app);
+			new GameManager(app).handleCellClick(cell, cellContainer, cellSize, app);
 		});
-
-		// эмитим своё событие наружу
-		cellContainer.emit(
-			'cellClick',
-			{
-				index: i,
-				container: cellContainer,
-				cellData: cell,
-			},
-			() => {
-				console.log('cellClick', cell);
-			}
-		);
 
 		cellContainer.on('pointerover', () => {
 			graphics.clear();
