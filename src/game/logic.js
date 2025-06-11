@@ -8,6 +8,7 @@ import {
 	createSprite,
 	scaleTarget
 } from '../helpers/index.js';
+import { showVictoryConfetti } from '../ui/victory.js';
 import { gameState, stateBoard } from './stateGame.js';
 
 export class GameManager {
@@ -81,7 +82,7 @@ export class GameManager {
 					y: 0,
 					x: 0
 				},
-				{ y: 1.5, x: 1.5 }
+				{ y: .3, x: .3 }
 			);
 			cellContainer.addChild(cellValue);
 		}
@@ -112,6 +113,8 @@ export class GameManager {
 					? animateContainer(this.playerOneName)
 					: animateContainer(this.playerTwoName);
 			}
+			
+			showVictoryConfetti(this.app);
 			return;
 		}
 		
@@ -148,6 +151,8 @@ export class GameManager {
 		this.gameOver.visible = false;
 		this.draw.visible = false;
 		this.trophy.visible = false;
+		this.playerOneName.scale.set(0);
+		this.playerTwoName.scale.set(0);
 		
 		// Сбрасываем анимации игроков
 		gsap.killTweensOf(this.playerOne.scale);
