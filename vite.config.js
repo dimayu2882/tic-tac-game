@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	base: './',
 	server: {
-		port: 8080,
+		port: 8081,
 		open: true
 	},
 	build: {
@@ -14,7 +14,7 @@ export default defineConfig({
 			}
 		},
 		sourcemap: true,
-		target: 'esnext' // или 'es2022'
+		target: 'esnext'
 	},
 	define: {
 		'process.env.NODE_ENV': JSON.stringify('production')

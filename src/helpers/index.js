@@ -6,20 +6,29 @@ export function createSprite(textureKey) {
 	return new Sprite(texture);
 }
 
-export const findByLabel = (container, label) => {
-	if (container.label === label) {
-		return container;
-	}
+export function animateContainer(target) {
+	gsap.to(target.scale, {
+		duration: 1,
+		x: 1,
+		y: 1,
+		ease: 'back.out(1.7)'
+	});
 	
-	for (const child of container.children) {
-		const result = findByLabel(child, label);
-		if (result) return result;
-	}
-	
-	return null;
-};
+	gsap.to(target, {
+		duration: 1,
+		rotation: Math.PI * 2,
+		ease: 'back.out(1.7)'
+	});
+}
 
-export const scaleTarget = (target) => {
+export const scaleTarget = target => {
+	// Останавливаем все предыдущие анимации
+	gsap.killTweensOf(target.scale);
+
+	// Устанавливаем начальный scale
+	target.scale.set(1);
+
+	// Запускаем новую анимацию
 	gsap.to(target.scale, {
 		x: 1.2,
 		y: 1.2,
@@ -29,4 +38,3 @@ export const scaleTarget = (target) => {
 		ease: 'sine.inOut',
 	});
 };
-
