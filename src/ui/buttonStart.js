@@ -1,5 +1,4 @@
 import { Container, Graphics, Text } from 'pixi.js';
-import { gsap } from 'gsap';
 
 import { labels } from '../common/enums.js';
 
@@ -29,18 +28,15 @@ export default function createBtnStart(app) {
 	buttonText.y = 50 / 2;
 	button.addChild(buttonText);
 
-	button.x = app.screen.width / 2;
-	button.y = app.screen.height / 2;
 	button.pivot.set(button.width / 2, button.height / 2);
+	button.position.set(app.renderer.width / 2, app.renderer.height/ 2);
 
-	gsap.to(button.scale, {
-		x: 1.05,
-		y: 1.05,
-		duration: 0.6,
-		yoyo: true,
-		repeat: -1,
-		ease: 'sine.inOut',
-	});
+	const updatePosition = () => {
+		button.position.set(app.renderer.width / 2, app.renderer.height/ 2);
+	};
+
+	window.addEventListener('resize', updatePosition);
+	window.addEventListener('orientationchange', updatePosition);
 
 	return button;
 }

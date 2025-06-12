@@ -9,7 +9,7 @@ import {
 	createBtnStart,
 	createContainerGameOver,
 	createLogo,
-	createPlayers,
+	createPlayers, createSoundButton
 } from '../ui/index.js';
 
 export class Game {
@@ -43,8 +43,16 @@ export class Game {
 		const btnStart = createBtnStart(app);
 		const board = createBoard(app);
 		const gameOver = createContainerGameOver(app);
+		const soundButton =  createSoundButton(app);
 
-		this.gameContainer.addChild(logo, players, btnStart, board, gameOver);
+		this.gameContainer.addChild(
+			logo,
+			players,
+			btnStart,
+			board,
+			gameOver,
+			soundButton
+		);
 		app.stage.addChild(this.gameContainer);
 
 		// Даем время на инициализацию всех элементов

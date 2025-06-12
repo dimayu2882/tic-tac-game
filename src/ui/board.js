@@ -7,8 +7,8 @@ import { stateBoard } from '../game/stateGame.js';
 export default function createBoard(app) {
 	const board = new Container();
 
-	const cellSize = app.screen.width * 0.15;
-	const gap = app.screen.width * 0.005;
+	let cellSize = app.renderer.width * 0.15;
+	const gap = app.renderer.width * 0.005;
 	const defaultColor = 0x843ce0;
 	const hoverColor = 0xa569bd;
 
@@ -21,12 +21,14 @@ export default function createBoard(app) {
 	board.addChild(boardBg);
 	board.label = labels.board;
 	board.visible = false;
+	board.width = cellSize * 3 + gap * 2;
 
 	for (let i = 0; i < stateBoard.length; i++) {
 		const cellContainer = new Container();
 		cellContainer.label = i;
 		const cell = stateBoard[i];
 		const graphics = new Graphics();
+		graphics.label = i;
 
 		graphics.roundRect(0, 0, cellSize, cellSize, 10);
 		graphics.fill(0x843ce0);
@@ -70,11 +72,15 @@ export default function createBoard(app) {
 		});
 	}
 
-	board.pivot.set(0.5, 0.5);
-	board.position.set(
-		app.screen.width / 2 - board.width / 2,
-		app.screen.height / 2 - board.height / 2
-	);
+	board.pivot.set(board.width / 2, board.height / 2);
+	board.position.set(app.renderer.width / 2, app.renderer.height / 2);
+	
+	const updatePosition = () => {
+		board.position.set(app.renderer.width / 2, app.renderer.height/ 2);
+	};
+	
+	window.addEventListener('resize', updatePosition);
+	window.addEventListener('orientationchange', updatePosition);
 
 	return board;
 }

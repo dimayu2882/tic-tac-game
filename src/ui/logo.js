@@ -10,7 +10,7 @@ export default function createLogo(app) {
 	logo.anchor.set(0.5);
 	const scaleX = app.screen.width / logo.texture.width;
 	logo.scale.set(scaleX);
-	logo.position.set(app.screen.width / 2, app.screen.height / 10);
+	logo.position.set(app.screen.width / 2, 100);
 	logo.label = labels.logo;
 
 	gsap.fromTo(
@@ -24,6 +24,13 @@ export default function createLogo(app) {
 			ease: 'sine.inOut',
 		}
 	);
+	
+	const updatePosition = () => {
+		logo.position.set(app.screen.width / 2, 100);
+	};
+	
+	window.addEventListener('resize', updatePosition);
+	window.addEventListener('orientationchange', updatePosition);
 
 	return logo;
 }

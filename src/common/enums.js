@@ -12,6 +12,8 @@ export const labels = {
 	playerOneName: 'playerOneName',
 	playerTwoName: 'playerTwoName',
 	playAgainButton: 'playAgainButton',
+	sound: 'sound',
+	muteSlash: 'muteSlash',
 };
 
 export const gameValues = {

@@ -112,6 +112,14 @@ export default function createContainerGameOver(app) {
 
 	playerTwoName.scale.set(0);
 	playerTwoName.rotation = 0;
+	
+	const updatePosition = () => {
+		container.position.set(app.screen.width / 2, app.screen.height / 2);
+		bg.roundRect(0, 0, app.screen.width / 3, app.screen.width / 3, 20);
+	};
+	
+	window.addEventListener('resize', updatePosition);
+	window.addEventListener('orientationchange', updatePosition);
 
 	return container;
 }
