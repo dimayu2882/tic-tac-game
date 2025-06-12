@@ -1,7 +1,8 @@
-import { gsap } from 'gsap';
 import { BlurFilter, Container } from 'pixi.js';
+import { gsap } from 'gsap';
+import { Howler } from 'howler';
 
-import { allTextureKeys } from '../common/assets.js';
+import { allTextureKeys, sounds } from '../common/assets.js';
 import { gameValues, labels } from '../common/enums.js';
 import {
 	animateContainer,
@@ -28,8 +29,11 @@ export class GameManager {
 		this.playerOneName = this.gameOver.getChildByLabel(labels.playerOneName);
 		this.playerTwoName = this.gameOver.getChildByLabel(labels.playerTwoName);
 		this.playAgainButton = this.gameOver.getChildByLabel(labels.playAgainButton);
+		this.soundButton = this.gameContainer.getChildByLabel(labels.sound);
+		this.slash = this.soundButton.getChildByLabel(labels.muteSlash);
 		
-		// Добавляем обработчик для кнопки Play Again
+		// Добавляем обработчики
+		this.soundButton.on('pointerdown', () => this.toggleSound());
 		this.playAgainButton.on('pointerdown', () => this.restartGame(this.board));
 	}
 	
@@ -59,6 +63,8 @@ export class GameManager {
 	handleCellClick = (cell, cellContainer, cellSize) => {
 		if (gameState.isGameOver || cell.value !== '') return;
 		
+		sounds.click.play();
+		
 		cell.value = gameState.currentPlayer;
 		
 		let cellValue = null;
@@ -82,7 +88,7 @@ export class GameManager {
 					y: 0,
 					x: 0
 				},
-				{ y: .3, x: .3 }
+				{ y: 0.3, x: 0.3 }
 			);
 			cellContainer.addChild(cellValue);
 		}
@@ -115,6 +121,7 @@ export class GameManager {
 			}
 			
 			showVictoryConfetti(this.app);
+			sounds.win.play();
 			return;
 		}
 		
@@ -127,12 +134,14 @@ export class GameManager {
 	startGame = () => this.btnStart.on('pointerdown', () => {
 		this.board.visible = true;
 		scaleTarget(this.playerOne);
+		sounds.bg.play();
 	});
 	
 	restartGame(board) {
 		// Сбрасываем состояние игры
 		gameState.isGameOver = false;
 		gameState.currentPlayer = gameValues.cross;
+		
 		gameState.winner = null;
 		
 		// Очищаем стейт
@@ -160,5 +169,17 @@ export class GameManager {
 		
 		// Запускаем анимацию первого игрока
 		scaleTarget(this.playerOne);
+	}
+	
+	toggleSound() {
+		this.soundButton.isMuted = !this.soundButton.isMuted;
+		
+		gsap.to(this.slash, {
+			alpha: this.soundButton.isMuted ? 1 : 0,
+			duration: 0.25,
+			ease: 'power2.out'
+		});
+		
+		this.soundButton.isMuted ? Howler.mute(true) : Howler.mute(false);
 	}
 }

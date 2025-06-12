@@ -1,3 +1,5 @@
+import { Howl } from 'howler';
+
 export const allTextureKeys = {
 	cross: 'cross',
 	draw: 'draw',
@@ -7,6 +9,7 @@ export const allTextureKeys = {
 	logo: 'logo',
 	playerOne: 'playerOne',
 	playerTwo: 'playerTwo',
+	sound: 'sound',
 };
 
 export const appTextures = {
@@ -18,4 +21,17 @@ export const appTextures = {
 	[allTextureKeys.logo]: 'img/logo.png',
 	[allTextureKeys.playerOne]: 'img/playerOne.png',
 	[allTextureKeys.playerTwo]: 'img/playerTwo.png',
+	[allTextureKeys.sound]: 'img/sound.png',
+};
+
+export const sounds = {
+	click: new Howl({
+		src: ['audio/click.mp3'] ,
+	}),
+	win: new Howl({ src: ['audio/win.mp3'] }),
+	bg: new Howl({
+		src: ['audio/bg.wav'],
+		loop: true,
+		volume: 0.2,
+	}),
 };

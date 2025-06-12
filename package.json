@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "gsap": "^3.13.0",
+    "howler": "^2.2.4",
     "pixi.js": "^8.10.0"
   },
   "devDependencies": {
