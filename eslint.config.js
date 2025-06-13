@@ -3,14 +3,14 @@ import js from '@eslint/js';
 
 export default defineConfig([
 	{
-		ignores: ["dist/**"],
+		ignores: ['dist/**'],
 	},
 	{
 		files: ['**/*.js'],
 		...js.configs.recommended,
 		rules: {
 			'semi': ['error', 'always'],
-			'quotes': ['error', 'single'],
+			'quotes': ['error', 'single', { 'allowTemplateLiterals': true }],
 			'no-unused-vars': 'warn',
 			'no-undef': 'error',
 			'indent': ['error', 'tab'],
@@ -30,8 +30,8 @@ export default defineConfig([
 				require: 'readonly',
 				module: 'readonly',
 				__dirname: 'readonly',
-				setTimeout: "readonly",
-				clearTimeout: "readonly",
+				setTimeout: 'readonly',
+				clearTimeout: 'readonly',
 			},
 		},
 	},
