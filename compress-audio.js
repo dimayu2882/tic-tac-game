@@ -18,7 +18,7 @@ fs.readdirSync(inputDir).forEach(file => {
 	const inputSize = fs.statSync(inputPath).size;
 	
 	ffmpeg(inputPath)
-		.audioBitrate('96k')
+		.audioBitrate('128k')
 		.toFormat('mp3')
 		.on('end', () => {
 			try {

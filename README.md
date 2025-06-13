@@ -1,11 +1,14 @@
 # Tic tac game
 
-![Логотип или скриншот игры](public/img/game.png)
+![Логотип или скриншот игры](public/img/game.webp)
 
 **Краткое описание**: Tic tac game (Крестики нолики), созданная на движке PixiJS.
 
 ## Демо
 https://tic-tac-game-rose.vercel.app/
+
+## macOS (Homebrew)
+brew install ffmpeg
 
 Для установки пакетов используйте команду npm install
 
