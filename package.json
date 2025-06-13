@@ -5,11 +5,14 @@
   "type": "module",
   "scripts": {
     "start": "npm run dev",
-    "build": "npm run lint && vite build",
+    "webp": "node convert-to-webp.js",
+    "compress:audio": "node compress-audio.js",
+    "build": "npm run webp && npm run lint && vite build",
     "lint": "eslint src --config eslint.config.js --fix",
     "dev": "vite"
   },
   "dependencies": {
+    "fluent-ffmpeg": "^2.1.3",
     "gsap": "^3.13.0",
     "howler": "^2.2.4",
     "pixi.js": "^8.10.0"
@@ -22,6 +25,8 @@
     "eslint-define-config": "^2.1.0",
     "eslint-plugin-prettier": "^5.4.0",
     "prettier": "^3.5.3",
-    "vite": "^6.2.0"
+    "sharp": "^0.34.2",
+    "vite": "^6.2.0",
+    "vite-plugin-imagemin": "^0.6.1"
   }
 }

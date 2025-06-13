@@ -13,15 +13,15 @@ export const allTextureKeys = {
 };
 
 export const appTextures = {
-	[allTextureKeys.cross]: 'img/cross.png',
-	[allTextureKeys.draw]: 'img/draw.png',
-	[allTextureKeys.trophy]: 'img/trophy.png',
-	[allTextureKeys.zero]: 'img/zero.png',
+	[allTextureKeys.cross]: 'img/cross.webp',
+	[allTextureKeys.draw]: 'img/draw.webp',
+	[allTextureKeys.trophy]: 'img/trophy.webp',
+	[allTextureKeys.zero]: 'img/zero.webp',
 	[allTextureKeys.bg]: 'img/bg.svg',
-	[allTextureKeys.logo]: 'img/logo.png',
-	[allTextureKeys.playerOne]: 'img/playerOne.png',
-	[allTextureKeys.playerTwo]: 'img/playerTwo.png',
-	[allTextureKeys.sound]: 'img/sound.png',
+	[allTextureKeys.logo]: 'img/logo.webp',
+	[allTextureKeys.playerOne]: 'img/playerOne.webp',
+	[allTextureKeys.playerTwo]: 'img/playerTwo.webp',
+	[allTextureKeys.sound]: 'img/sound.webp',
 };
 
 export const sounds = {
@@ -30,7 +30,7 @@ export const sounds = {
 	}),
 	win: new Howl({ src: ['audio/win.mp3'] }),
 	bg: new Howl({
-		src: ['audio/bg.wav'],
+		src: ['audio/bg.mp3'],
 		loop: true,
 		volume: 0.2,
 	}),
