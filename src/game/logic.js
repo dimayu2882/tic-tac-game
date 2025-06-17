@@ -172,12 +172,12 @@ export class GameManager {
 	}
 	
 	toggleSound() {
-		this.soundButton.isMuted = !this.soundButton.isMuted;
+		this.soundButton.flags.isMuted = !this.soundButton.flags.isMuted;
 		
-		Howler.mute(this.soundButton.isMuted);
+		Howler.mute(this.soundButton.flags.isMuted);
 		
 		gsap.to(this.slash, {
-			alpha: this.soundButton.isMuted ? 1 : 0,
+			visible: this.soundButton.flags.isMuted,
 			duration: 0.25,
 			ease: 'power2.out'
 		});

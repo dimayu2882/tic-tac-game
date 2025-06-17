@@ -33,6 +33,9 @@ export class PixiElement {
 				if (config.roundRect) {
 					el.roundRect(...config.roundRect);
 				}
+				if (config.setStrokeStyle) el.setStrokeStyle(config.setStrokeStyle);
+				if (config.moveTo) el.moveTo(...config.moveTo);
+				if (config.lineTo) el.lineTo(...config.lineTo);
 				if (config.fill !== undefined) {
 					el.fill(config.fill);
 				}
@@ -63,23 +66,21 @@ export class PixiElement {
 		if (config.scale) el.scale.set(...config.scale);
 		if (config.anchor) el.anchor.set(...config.anchor);
 		if (config.alpha !== undefined) el.alpha = config.alpha;
-		if (config.name) el.name = config.name;
 		if (config.eventMode) el.eventMode = config.eventMode;
 		if (config.cursor) el.cursor = config.cursor;
 		if (config.interactive !== undefined) el.interactive = config.interactive;
+		if (config.half)  el.half = config.half;
 		if (config.label)  el.label = config.label;
-		
-		// События
-		if (config.on) {
-			for (const [event, handler] of Object.entries(config.on)) {
-				el.on(event, handler);
-			}
-		}
 		
 		return el;
 	}
 	
 	// Методы API
+	registerFlag = (flagName, value = true) => {
+		this.instance.flags = this.instance.flags || {};
+		this.instance.flags[flagName] = value;
+	};
+	
 	show = () => this.instance.visible = true;
 	
 	hide = () => this.instance.visible = false;
