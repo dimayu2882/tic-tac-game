@@ -1,14 +1,13 @@
 import { Assets, Container } from 'pixi.js';
 
-import { appTextures } from '../common/assets.js';
+import { allTextureKeys, appTextures } from '../common/assets.js';
 import { PRELOADER_ID } from '../common/constants.js';
-import { labels } from '../common/enums.js';
+import { elementType, labels } from '../common/enums.js';
 import { GameManager } from '../game/logic.js';
 import {
 	createBoard,
 	createBtnStart,
-	createContainerGameOver,
-	createLogo,
+	createContainerGameOver, createLogo,
 	createPlayers, createSoundButton
 } from '../ui/index.js';
 
@@ -37,14 +36,14 @@ export class Game {
 	initializeGameElements = async () => {
 		const { app } = this;
 		await this.loadAppAssets();
-
-		const logo = createLogo(app);
+		
+		const logo = createLogo();
 		const players = createPlayers(app);
 		const btnStart = createBtnStart(app);
 		const board = createBoard(app);
 		const gameOver = createContainerGameOver(app);
 		const soundButton =  createSoundButton(app);
-
+		
 		this.gameContainer.addChild(
 			logo,
 			players,
@@ -54,13 +53,6 @@ export class Game {
 			soundButton
 		);
 		app.stage.addChild(this.gameContainer);
-
-		// Даем время на инициализацию всех элементов
-		await new Promise(resolve => {
-			window.requestAnimationFrame(() => {
-				window.requestAnimationFrame(resolve);
-			});
-		});
 
 		new GameManager(app).startGame();
 

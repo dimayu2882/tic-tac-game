@@ -22,13 +22,10 @@ export function animateContainer(target) {
 }
 
 export const scaleTarget = target => {
-	// Останавливаем все предыдущие анимации
 	gsap.killTweensOf(target.scale);
 
-	// Устанавливаем начальный scale
 	target.scale.set(1);
 
-	// Запускаем новую анимацию
 	gsap.to(target.scale, {
 		x: 1.2,
 		y: 1.2,

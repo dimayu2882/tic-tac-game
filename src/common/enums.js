@@ -21,3 +21,10 @@ export const gameValues = {
 	zero: 'zero',
 	draw: 'draw',
 };
+
+export const elementType = {
+	SPRITE: 'sprite',
+	CONTAINER: 'container',
+	TEXT: 'text',
+	GRAPHICS: 'graphics',
+};
