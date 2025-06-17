@@ -13,7 +13,7 @@ export default function createLogo () {
 		anchor: [0.5],
 		scale: [0.2],
 		label: labels.logo,
-	}, onResizeHandler);
+	}, onResizeHandler, true);
 	
 	logo.animateFromTo(
 		'scale',

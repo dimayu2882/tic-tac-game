@@ -1,4 +1,4 @@
-import { Sprite, Container, Text, Graphics, Texture, Assets } from 'pixi.js';
+import { Sprite, Container, Text, Graphics, Assets } from 'pixi.js';
 import gsap from 'gsap';
 
 import { elementType } from '../common/enums.js';
@@ -6,12 +6,12 @@ import { subscribeToResize } from './resizeManager.js';
 import { getAppInstance } from './utils.js';
 
 export class PixiElement {
-	constructor(config = {}, onResizeHandler) {
+	constructor(config = {}, onResizeHandler, isSubscribeToResize) {
 		this.type = config.type || elementType.CONTAINER;
 		this.instance = this._create(config);
 		this.app =  getAppInstance();
 		this.onResizeHandler = onResizeHandler;
-		subscribeToResize (this);
+		if (isSubscribeToResize) subscribeToResize (this);
 	}
 	
 	_create(config) {
@@ -31,7 +31,12 @@ export class PixiElement {
 				break;
 			case elementType.GRAPHICS:
 				el = new Graphics();
-				if (config.draw) config.draw(el);
+				if (config.roundRect) {
+					el.roundRect(...config.roundRect);
+				}
+				if (config.fill !== undefined) {
+					el.fill(config.fill);
+				}
 				break;
 			case elementType.CONTAINER:
 			default:
@@ -79,10 +84,6 @@ export class PixiElement {
 	show = () => this.instance.visible = true;
 	
 	hide = () => this.instance.visible = false;
-	
-	animateTo(vars, options = {}) {
-		return gsap.to(this.instance, { ...vars, ...options });
-	}
 	
 	// Метод fromTo для произвольной анимации
 	animateFromTo(targetProperty, fromVars, toVars, options = {}) {
