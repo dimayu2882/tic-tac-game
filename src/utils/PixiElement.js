@@ -1,5 +1,4 @@
 import { Sprite, Container, Text, Graphics, Assets } from 'pixi.js';
-import gsap from 'gsap';
 
 import { elementType } from '../common/enums.js';
 import { subscribeToResize } from './resizeManager.js';
@@ -85,18 +84,13 @@ export class PixiElement {
 	
 	hide = () => this.instance.visible = false;
 	
-	// Метод fromTo для произвольной анимации
-	animateFromTo(targetProperty, fromVars, toVars, options = {}) {
-		return gsap.fromTo(this.instance[targetProperty], fromVars, { ...toVars, ...options });
-	}
-	
 	onResize = () => {
 		this.onResizeHandler();
 	};
 	
 	destroy = () => this.instance.destroy({ children: true });
 	
-	addChild = (child) => this.instance.addChild(child);
+	addChildren = (children) => children.forEach((child) => {this.instance.addChild(child)});
 	
 	addToContainer = (container) => container.addChild(this.instance);
 	

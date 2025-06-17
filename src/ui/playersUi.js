@@ -1,39 +1,38 @@
-import { Container } from 'pixi.js';
-
+import { PixiElement } from '../utils/PixiElement.js';
 import { allTextureKeys } from '../common/assets.js';
-import { labels } from '../common/enums.js';
-import { createSprite } from '../helpers/index.js';
+import { elementType, labels } from '../common/enums.js';
 
 export default function createPlayers(app) {
-	const playersContainer = new Container();
-	playersContainer.label = labels.playersContainer;
-
-	const playerOne = createSprite(allTextureKeys.playerOne);
-	const playerTwo = createSprite(allTextureKeys.playerTwo);
-
-	playerOne.position.set(playerOne.width, 0);
-	playerOne.pivot.set(playerOne.width / 2, playerOne.height / 2);
-	playerOne.label = labels.playerOne;
-
-	playerTwo.position.set(app.screen.width - playerTwo.width, 0);
-	playerTwo.pivot.set(playerTwo.width / 2, playerTwo.height / 2);
-	playerTwo.label = labels.playerTwo;
-
-	playersContainer.addChild(playerOne, playerTwo);
-	playersContainer.position.set(0, playersContainer.height / 2 + 10);
+	const playersContainer = new PixiElement({
+		type: elementType.CONTAINER,
+		label: labels.playersContainer
+	}, onResizeHandler, true);
 	
-	const updatePosition = () => {
-		playerOne.position.set(playerOne.width, 0);
-		playerOne.pivot.set(playerOne.width / 2, playerOne.height / 2);
-		
-		playerTwo.position.set(app.screen.width - playerTwo.width, 0);
-		playerTwo.pivot.set(playerTwo.width / 2, playerTwo.height / 2);
-		
-		playersContainer.position.set(0, playersContainer.height / 2 + 10);
-	};
+	const playerOne = new PixiElement({
+		type: elementType.SPRITE,
+		texture: allTextureKeys.playerOne,
+		label: labels.playerOne,
+	});
 	
-	window.addEventListener('resize', updatePosition);
-	window.addEventListener('orientationchange', updatePosition);
-
-	return playersContainer;
+	const playerTwo = new PixiElement({
+		type: elementType.SPRITE,
+		texture: allTextureKeys.playerTwo,
+		label: labels.playerTwo,
+	});
+	
+	playerOne.getElement().position.set(playerOne.getElement().width, 0);
+	playerOne.getElement().pivot.set(playerOne.getElement().width / 2, playerOne.getElement().height / 2);
+	
+	playerTwo.getElement().position.set(app.screen.width - playerTwo.getElement().width, 0);
+	playerTwo.getElement().pivot.set(playerTwo.getElement().width / 2, playerTwo.getElement().height / 2);
+	
+	playersContainer.addChildren([playerOne.getElement(), playerTwo.getElement()]);
+	playersContainer.getElement().position.set(0, playersContainer.getElement().height / 2 + 10);
+	
+	function onResizeHandler() {
+		playerOne.getElement().position.set(playerOne.getElement().width, 0);
+		playerTwo.getElement().position.set(app.screen.width - playerTwo.getElement().width, 0);
+	}
+	
+	return playersContainer.getElement();
 }

@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+
 import { elementType, labels } from '../common/enums.js';
 import { PixiElement } from '../utils/PixiElement.js';
 
@@ -18,7 +19,7 @@ export default function createBtnStart(app) {
 		roundRect: [0, 0, 150, 50, 10],
 		fill: '0xfcd015',
 	});
-	button.addChild(bgButton.getElement());
+	button.addChildren([bgButton.getElement()]);
 	
 	const buttonText = new PixiElement({
 		type: elementType.TEXT,
@@ -32,7 +33,7 @@ export default function createBtnStart(app) {
 			align: 'center',
 		},
 	});
-	button.addChild(buttonText.getElement());
+	button.addChildren([buttonText.getElement()]);
 	
 	const buttonElement = button.getElement();
 	

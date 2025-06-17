@@ -1,3 +1,4 @@
+import { gsap } from 'gsap';
 import { allTextureKeys } from '../common/assets.js';
 import { elementType, labels } from '../common/enums.js';
 import { PixiElement } from '../utils/PixiElement.js';
@@ -15,8 +16,7 @@ export default function createLogo () {
 		label: labels.logo,
 	}, onResizeHandler, true);
 	
-	logo.animateFromTo(
-		'scale',
+	gsap.fromTo(logo.getElement().scale,
 		{ x: 0.2, y: 0.2 },
 		{ x: 0.5, y: 0.5, duration: 0.5, yoyo: true, ease: 'sine.inOut' }
 	);
