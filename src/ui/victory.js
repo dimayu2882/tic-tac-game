@@ -1,28 +1,64 @@
 import { gsap } from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { Graphics } from 'pixi.js';
+import { Container, Graphics } from 'pixi.js';
 
 gsap.registerPlugin(MotionPathPlugin);
 
-const COLORS = [0xffd700, 0xff69b4, 0x00bfff, 0x98fb98, 0xffa500];
-
-function createConfettiPiece() {
-	const shape = Math.random() > 0.5 ? 'circle' : 'square';
-	const graphics = new Graphics();
-	const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-
-	if (shape === 'circle') {
-		graphics.circle(0, 0, 4).fill(color);
-	} else {
-		graphics.rect(-4, -4, 8, 8).fill(color);
+class ConfettiPool {
+	constructor(size = 200) {
+		this.pool = [];
+		this.active = new Set();
+		this.size = size;
+		this.initialize();
 	}
 
-	return graphics;
+	initialize() {
+		for (let i = 0; i < this.size; i++) {
+			this.pool.push(this.createConfettiPiece());
+		}
+	}
+
+	createConfettiPiece() {
+		const confetti = new Container();
+		const graphics = new Graphics();
+
+		// Случайный цвет
+		const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff];
+		const color = colors[Math.floor(Math.random() * colors.length)];
+
+		graphics.rect(0, 0, 10, 10).fill(color);
+
+		confetti.addChild(graphics);
+		return confetti;
+	}
+
+	get() {
+		if (this.pool.length === 0) {
+			return this.createConfettiPiece();
+		}
+		const confetti = this.pool.pop();
+		this.active.add(confetti);
+		return confetti;
+	}
+
+	release(confetti) {
+		if (this.active.has(confetti)) {
+			this.active.delete(confetti);
+			confetti.alpha = 0;
+			confetti.rotation = 0;
+			confetti.scale.set(1);
+			this.pool.push(confetti);
+		}
+	}
 }
 
+const confettiPool = new ConfettiPool();
+
 export function showVictoryConfetti(app, count = 200) {
-	for (let i = 0; i < count; i++) {
-		const confetti = createConfettiPiece();
+	const activeCount = Math.min(count, confettiPool.size);
+
+	for (let i = 0; i < activeCount; i++) {
+		const confetti = confettiPool.get();
 		confetti.x = app.renderer.width / 2;
 		confetti.y = 0;
 		confetti.rotation = Math.random() * Math.PI * 2;
@@ -35,7 +71,6 @@ export function showVictoryConfetti(app, count = 200) {
 		const endX = startX + (Math.random() - 0.5) * app.renderer.width;
 		const endY = startY + Math.random() * app.renderer.height;
 
-		// Создаем контрольные точки для дуговой траектории
 		const controlX = startX + (endX - startX) * 0.5;
 		const controlY = startY - 100;
 
@@ -55,14 +90,17 @@ export function showVictoryConfetti(app, count = 200) {
 						{ x: controlX, y: controlY },
 						{ x: endX, y: endY },
 					],
-					curviness: 2.5, // Увеличиваем кривизну для более выраженной дуги
+					curviness: 2.5,
 				},
 				rotation: confetti.rotation + Math.random() * 4,
 				onComplete: () => {
 					gsap.to(confetti, {
 						alpha: 0,
 						duration: 0.5,
-						onComplete: () => confetti.destroy(),
+						onComplete: () => {
+							app.stage.removeChild(confetti);
+							confettiPool.release(confetti);
+						},
 					});
 				},
 			});

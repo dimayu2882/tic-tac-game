@@ -1,8 +1,8 @@
 import { Container, Graphics } from 'pixi.js';
 
 import { labels } from '../common/enums.js';
-import { GameManager } from '../game/logic.js';
-import { stateBoard } from '../game/stateGame.js';
+import { gameState } from '../game/stateGame.js';
+import { eventBus } from '../utils/eventBus.js';
 
 export default function createBoard(app) {
 	const board = new Container();
@@ -23,10 +23,10 @@ export default function createBoard(app) {
 	board.visible = false;
 	board.width = cellSize * 3 + gap * 2;
 
-	for (let i = 0; i < stateBoard.length; i++) {
+	for (let i = 0; i < gameState.board.length; i++) {
 		const cellContainer = new Container();
 		cellContainer.label = i;
-		const cell = stateBoard[i];
+		const cell = gameState.board[i];
 		const graphics = new Graphics();
 		graphics.label = i;
 
@@ -56,7 +56,7 @@ export default function createBoard(app) {
 		board.addChild(cellContainer);
 
 		cellContainer.on('pointerdown', () => {
-			new GameManager(app).handleCellClick(cell, cellContainer, cellSize, app);
+			eventBus.emit('cellClick', { cell, cellContainer, cellSize });
 		});
 
 		cellContainer.on('pointerover', () => {
@@ -74,13 +74,6 @@ export default function createBoard(app) {
 
 	board.pivot.set(board.width / 2, board.height / 2);
 	board.position.set(app.renderer.width / 2, app.renderer.height / 2);
-	
-	const updatePosition = () => {
-		board.position.set(app.renderer.width / 2, app.renderer.height/ 2);
-	};
-	
-	window.addEventListener('resize', updatePosition);
-	window.addEventListener('orientationchange', updatePosition);
 
 	return board;
 }
