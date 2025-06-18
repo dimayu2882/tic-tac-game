@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+
 import { allTextureKeys } from '../common/assets.js';
 import { elementType, labels } from '../common/enums.js';
 import { PixiElement } from '../utils/PixiElement.js';
@@ -16,14 +17,16 @@ export default function createLogo () {
 		label: labels.logo,
 	}, onResizeHandler, true);
 	
-	gsap.fromTo(logo.getElement().scale,
+	const logoElement = logo.getElement();
+	
+	gsap.fromTo(logoElement.scale,
 		{ x: 0.2, y: 0.2 },
 		{ x: 0.5, y: 0.5, duration: 0.5, yoyo: true, ease: 'sine.inOut' }
 	);
 	
 	function onResizeHandler () {
-		logo.getElement().position.x = app.screen.width / 2;
+		logoElement.position.x = app.screen.width / 2;
 	}
 	
-	return logo.getElement();
+	return logoElement;
 }

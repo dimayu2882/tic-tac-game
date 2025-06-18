@@ -20,19 +20,23 @@ export default function createPlayers(app) {
 		label: labels.playerTwo,
 	});
 	
-	playerOne.getElement().position.set(playerOne.getElement().width, 0);
-	playerOne.getElement().pivot.set(playerOne.getElement().width / 2, playerOne.getElement().height / 2);
+	const playersContainerElement = playersContainer.getElement();
+	const playerOneElement = playerOne.getElement();
+	const playerTwoElement = playerTwo.getElement();
 	
-	playerTwo.getElement().position.set(app.screen.width - playerTwo.getElement().width, 0);
-	playerTwo.getElement().pivot.set(playerTwo.getElement().width / 2, playerTwo.getElement().height / 2);
+	playerOneElement.position.set(playerOneElement.width, 0);
+	playerOneElement.pivot.set(playerOneElement.width / 2, playerOneElement.height / 2);
 	
-	playersContainer.addChildren([playerOne.getElement(), playerTwo.getElement()]);
-	playersContainer.getElement().position.set(0, playersContainer.getElement().height / 2 + 10);
+	playerTwoElement.position.set(app.screen.width - playerTwoElement.width, 0);
+	playerTwoElement.pivot.set(playerTwoElement.width / 2, playerTwoElement.height / 2);
+	
+	playersContainer.addChildren([playerOneElement, playerTwoElement]);
+	playersContainerElement.position.set(0, playersContainerElement.height / 2 + 10);
 	
 	function onResizeHandler() {
-		playerOne.getElement().position.set(playerOne.getElement().width, 0);
-		playerTwo.getElement().position.set(app.screen.width - playerTwo.getElement().width, 0);
+		playerOneElement.position.set(playerOneElement.width, 0);
+		playerTwoElement.position.set(app.screen.width - playerTwoElement.width, 0);
 	}
 	
-	return playersContainer.getElement();
+	return playersContainerElement;
 }

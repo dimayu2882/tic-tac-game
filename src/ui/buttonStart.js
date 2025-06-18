@@ -19,6 +19,7 @@ export default function createBtnStart(app) {
 		roundRect: [0, 0, 150, 50, 10],
 		fill: '0xfcd015',
 	});
+	const buttonElement = button.getElement();
 	button.addChildren([bgButton.getElement()]);
 	
 	const buttonText = new PixiElement({
@@ -35,8 +36,6 @@ export default function createBtnStart(app) {
 	});
 	button.addChildren([buttonText.getElement()]);
 	
-	const buttonElement = button.getElement();
-	
 	buttonElement.pivot.set(buttonElement.width / 2, buttonElement.height / 2);
 	
 	gsap.to(button.getElement().scale, {
@@ -49,8 +48,8 @@ export default function createBtnStart(app) {
 	});
 	
 	function onResizeHandler () {
-		button.getElement().position.set(app.renderer.width / 2, app.renderer.height/ 2);
+		buttonElement.position.set(app.renderer.width / 2, app.renderer.height/ 2);
 	}
 	
-	return button.getElement();
+	return buttonElement;
 }
