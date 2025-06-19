@@ -6,6 +6,8 @@ export function createSprite(textureKey) {
 	return new Sprite(texture);
 }
 
+export const getUIElement = (container, label) => container.getChildByLabel(label);
+
 export function animateContainer(target) {
 	gsap.to(target.scale, {
 		duration: 1,

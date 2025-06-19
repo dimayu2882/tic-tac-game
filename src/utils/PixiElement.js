@@ -47,16 +47,11 @@ export class PixiElement {
 
 	hide = () => (this.instance.visible = false);
 
-	onResize = () => {
-		this.onResizeHandler?.();
-	};
+	onResize = () => this.onResizeHandler();
 
 	destroy = () => this.instance.destroy({ children: true });
 
-	addChildren = children =>
-		children.forEach(child => {
-			this.instance.addChild(child);
-		});
+	addChildren = children => children.forEach(child => this.instance.addChild(child));
 
 	addToContainer = container => container.addChild(this.instance);
 

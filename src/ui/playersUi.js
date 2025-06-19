@@ -7,21 +7,20 @@ export default function createPlayers(app) {
 		type: elementType.CONTAINER,
 		label: labels.playersContainer
 	}, onResizeHandler, true);
+	const playersContainerElement = playersContainer.getElement();
 	
 	const playerOne = new PixiElement({
 		type: elementType.SPRITE,
 		texture: allTextureKeys.playerOne,
 		label: labels.playerOne,
 	});
+	const playerOneElement = playerOne.getElement();
 	
 	const playerTwo = new PixiElement({
 		type: elementType.SPRITE,
 		texture: allTextureKeys.playerTwo,
 		label: labels.playerTwo,
 	});
-	
-	const playersContainerElement = playersContainer.getElement();
-	const playerOneElement = playerOne.getElement();
 	const playerTwoElement = playerTwo.getElement();
 	
 	playerOneElement.position.set(playerOneElement.width, 0);

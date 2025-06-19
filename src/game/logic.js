@@ -3,37 +3,35 @@ import { BlurFilter, Container } from 'pixi.js';
 
 import { allTextureKeys } from '../common/assets.js';
 import { gameValues, labels } from '../common/enums.js';
-import {
-	animateContainer,
-	createSprite,
-	scaleTarget,
-} from '../helpers/index.js';
+import { animateContainer, createSprite, scaleTarget, getUIElement } from '../helpers/index.js';
 import { showVictoryConfetti } from '../ui/victory.js';
 import { eventBus } from '../utils/eventBus.js';
-import { gameState } from './stateGame.js';
 import { soundManager } from '../utils/soundManager.js';
+import { gameState } from './stateGame.js';
 
 export class GameManager {
 	constructor(app) {
 		this.app = app;
 
-		//UI elements
-		this.gameContainer = this.app.stage.getChildByLabel(labels.game);
-		this.btnStart = this.gameContainer.getChildByLabel(labels.buttonStart);
-		this.board = this.gameContainer.getChildByLabel(labels.board);
-		this.players = this.gameContainer.getChildByLabel(labels.playersContainer);
-		this.playerOne = this.players.getChildByLabel(labels.playerOne);
-		this.playerTwo = this.players.getChildByLabel(labels.playerTwo);
-		this.gameOver = this.gameContainer.getChildByLabel(labels.gameOver);
-		this.draw = this.gameOver.getChildByLabel(labels.draw);
-		this.trophy = this.gameOver.getChildByLabel(labels.trophy);
-		this.playerOneName = this.gameOver.getChildByLabel(labels.playerOneName);
-		this.playerTwoName = this.gameOver.getChildByLabel(labels.playerTwoName);
-		this.playAgainButton = this.gameOver.getChildByLabel(
-			labels.playAgainButton
-		);
-		this.soundButton = this.gameContainer.getChildByLabel(labels.sound);
-		this.slash = this.soundButton.getChildByLabel(labels.muteSlash);
+		const gameContainer = getUIElement(this.app.stage, labels.game);
+		const players = getUIElement(gameContainer, labels.playersContainer);
+		const gameOver = getUIElement(gameContainer, labels.gameOver);
+		const soundButton = getUIElement(gameContainer, labels.sound);
+
+		this.gameContainer = gameContainer;
+		this.btnStart = getUIElement(gameContainer, labels.buttonStart);
+		this.board = getUIElement(gameContainer, labels.board);
+		this.players = players;
+		this.playerOne = getUIElement(players, labels.playerOne);
+		this.playerTwo = getUIElement(players, labels.playerTwo);
+		this.gameOver = gameOver;
+		this.draw = getUIElement(gameOver, labels.draw);
+		this.trophy = getUIElement(gameOver, labels.trophy);
+		this.playerOneName = getUIElement(gameOver, labels.playerOneName);
+		this.playerTwoName = getUIElement(gameOver, labels.playerTwoName);
+		this.playAgainButton = getUIElement(gameOver, labels.playAgainButton);
+		this.soundButton = soundButton;
+		this.slash = getUIElement(soundButton, labels.muteSlash);
 
 		// Подписываемся на события
 		eventBus.on('cellClick', this.handleCellClick);
@@ -66,8 +64,7 @@ export class GameManager {
 				val &&
 				val === gameState.getCellValue(b) &&
 				val === gameState.getCellValue(c)
-			)
-				return { winner: val, line: [a, b, c] };
+			) return { winner: val, line: [a, b, c] };
 		}
 
 		const isDraw = gameState.board.every(cell => cell.value !== '');
@@ -98,11 +95,8 @@ export class GameManager {
 
 			gsap.fromTo(
 				cellValue.scale,
-				{
-					y: 0,
-					x: 0,
-				},
-				{ y: 0.3, x: 0.3 }
+				{y: 0, x: 0},
+				{y: 0.3, x: 0.3}
 			);
 			cellContainer.addChild(cellValue);
 		}
