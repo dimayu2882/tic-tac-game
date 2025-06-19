@@ -1,18 +1,17 @@
-import { debounce } from "./utils";
+import { debounce } from './utils';
 const resizeSubscribers = [];
 
 export const initResizeManager = () => {
-	window.addEventListener("resize", debounce(() => {
-			onWindowResize();
+	window.addEventListener('resize', debounce(() => {
+		onWindowResize();
 		console.log('resizeManager initResizeManager');
-			}, 0)
+	}, 0)
 	);
-}
+};
 
 export const subscribeToResize = (obj) => {
 	if (!resizeSubscribers.includes(obj)) {
 		resizeSubscribers.push(obj);
-		// handleResizeForObj(obj);
 	}
 };
 
@@ -27,7 +26,7 @@ const handleResizeForObj = (obj) => {
 };
 
 export const onWindowResize = () => {
-	console.log("resize window")
+	console.log('resize window');
 	for (const obj of resizeSubscribers) {
 		handleResizeForObj(obj);
 	}

@@ -15,10 +15,6 @@ export default defineConfig([
 			'no-undef': 'error',
 			'indent': ['error', 'tab'],
 		},
-		env: {
-			browser: true,
-			es2021: true,
-		},
 		languageOptions: {
 			ecmaVersion: 2022,
 			sourceType: 'module',
