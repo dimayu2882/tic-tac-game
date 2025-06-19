@@ -41,9 +41,7 @@ export class GameManager {
 
 		// Добавляем обработчики
 		this.soundButton.on('pointerdown', () => eventBus.emit('toggleSound'));
-		this.playAgainButton.on('pointerdown', () =>
-			eventBus.emit('restartGame', this.board)
-		);
+		this.playAgainButton.on('pointerdown', () => eventBus.emit('restartGame', this.board));
 	}
 
 	checkWinner() {
@@ -96,7 +94,7 @@ export class GameManager {
 			gsap.fromTo(
 				cellValue.scale,
 				{y: 0, x: 0},
-				{y: 0.3, x: 0.3}
+				{y: 0.2, x: 0.2}
 			);
 			cellContainer.addChild(cellValue);
 		}

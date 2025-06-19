@@ -54,7 +54,8 @@ export default function createContainerGameOver(app) {
 		},
 		label: labels.playerOneName,
 		anchor: [0.5, 0.5],
-		position: [containerBg.height / 2, containerBg.height / 6]
+		scale: [0, 0],
+		position: [containerBg.height / 2, containerBg.height / 6],
 	});
 	const containerPlayerOne = playerOneName.getElement();
 	
@@ -70,6 +71,7 @@ export default function createContainerGameOver(app) {
 		},
 		label: labels.playerTwoName,
 		anchor: [0.5, 0.5],
+		scale: [0],
 		position: [containerBg.height / 2, containerBg.height / 6]
 	});
 	const containerPlayerTwo = playerTwoName.getElement();

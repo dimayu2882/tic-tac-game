@@ -12,9 +12,9 @@ export default function createLogo() {
 		{
 			type: elementType.SPRITE,
 			texture: allTextureKeys.logo,
-			position: [app.screen.width / 2, 100],
+			position: [app.screen.width / 2, 50],
 			anchor: [0.5],
-			scale: [0.2],
+			scale: [0.1],
 			label: labels.logo,
 		},
 		onResizeHandler,
@@ -24,8 +24,8 @@ export default function createLogo() {
 
 	gsap.fromTo(
 		logoElement.scale,
-		{ x: 0.2, y: 0.2 },
-		{ x: 0.5, y: 0.5, duration: 0.5, yoyo: true, ease: 'sine.inOut' }
+		{ x: 0.1, y: 0.1 },
+		{ x: 0.3, y: 0.3, duration: 0.5, yoyo: true, ease: 'sine.inOut' }
 	);
 
 	function onResizeHandler() {

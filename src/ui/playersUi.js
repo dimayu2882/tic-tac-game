@@ -5,7 +5,7 @@ import { elementType, labels } from '../common/enums.js';
 export default function createPlayers(app) {
 	const playersContainer = new PixiElement({
 		type: elementType.CONTAINER,
-		label: labels.playersContainer
+		label: labels.playersContainer,
 	}, onResizeHandler, true);
 	const playersContainerElement = playersContainer.getElement();
 	
@@ -30,7 +30,7 @@ export default function createPlayers(app) {
 	playerTwoElement.pivot.set(playerTwoElement.width / 2, playerTwoElement.height / 2);
 	
 	playersContainer.addChildren([playerOneElement, playerTwoElement]);
-	playersContainerElement.position.set(0, playersContainerElement.height / 2 + 10);
+	playersContainerElement.position.set(0, playersContainerElement.height / 2 + 5);
 	
 	function onResizeHandler() {
 		playerOneElement.position.set(playerOneElement.width, 0);
