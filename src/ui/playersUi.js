@@ -1,39 +1,41 @@
-import { Container } from 'pixi.js';
-
+import { PixiElement } from '../utils/PixiElement.js';
 import { allTextureKeys } from '../common/assets.js';
-import { labels } from '../common/enums.js';
-import { createSprite } from '../helpers/index.js';
+import { elementType, labels } from '../common/enums.js';
 
 export default function createPlayers(app) {
-	const playersContainer = new Container();
-	playersContainer.label = labels.playersContainer;
-
-	const playerOne = createSprite(allTextureKeys.playerOne);
-	const playerTwo = createSprite(allTextureKeys.playerTwo);
-
-	playerOne.position.set(playerOne.width, 0);
-	playerOne.pivot.set(playerOne.width / 2, playerOne.height / 2);
-	playerOne.label = labels.playerOne;
-
-	playerTwo.position.set(app.screen.width - playerTwo.width, 0);
-	playerTwo.pivot.set(playerTwo.width / 2, playerTwo.height / 2);
-	playerTwo.label = labels.playerTwo;
-
-	playersContainer.addChild(playerOne, playerTwo);
-	playersContainer.position.set(0, playersContainer.height / 2 + 10);
+	const playersContainer = new PixiElement({
+		type: elementType.CONTAINER,
+		label: labels.playersContainer,
+	}, onResizeHandler, true);
+	const playersContainerElement = playersContainer.getElement();
 	
-	const updatePosition = () => {
-		playerOne.position.set(playerOne.width, 0);
-		playerOne.pivot.set(playerOne.width / 2, playerOne.height / 2);
-		
-		playerTwo.position.set(app.screen.width - playerTwo.width, 0);
-		playerTwo.pivot.set(playerTwo.width / 2, playerTwo.height / 2);
-		
-		playersContainer.position.set(0, playersContainer.height / 2 + 10);
-	};
+	const playerOne = new PixiElement({
+		type: elementType.SPRITE,
+		texture: allTextureKeys.playerOne,
+		label: labels.playerOne,
+	});
+	const playerOneElement = playerOne.getElement();
 	
-	window.addEventListener('resize', updatePosition);
-	window.addEventListener('orientationchange', updatePosition);
-
-	return playersContainer;
+	const playerTwo = new PixiElement({
+		type: elementType.SPRITE,
+		texture: allTextureKeys.playerTwo,
+		label: labels.playerTwo,
+	});
+	const playerTwoElement = playerTwo.getElement();
+	
+	playerOneElement.position.set(playerOneElement.width, 0);
+	playerOneElement.pivot.set(playerOneElement.width / 2, playerOneElement.height / 2);
+	
+	playerTwoElement.position.set(app.screen.width - playerTwoElement.width, 0);
+	playerTwoElement.pivot.set(playerTwoElement.width / 2, playerTwoElement.height / 2);
+	
+	playersContainer.addChildren([playerOneElement, playerTwoElement]);
+	playersContainerElement.position.set(0, playersContainerElement.height / 2 + 5);
+	
+	function onResizeHandler() {
+		playerOneElement.position.set(playerOneElement.width, 0);
+		playerTwoElement.position.set(app.screen.width - playerTwoElement.width, 0);
+	}
+	
+	return playersContainerElement;
 }

@@ -1,36 +1,36 @@
 import { gsap } from 'gsap';
 
 import { allTextureKeys } from '../common/assets.js';
-import { labels } from '../common/enums.js';
-import { createSprite } from '../helpers/index.js';
+import { elementType, labels } from '../common/enums.js';
+import { PixiElement } from '../utils/PixiElement.js';
+import { getAppInstance } from '../utils/utils.js';
 
-export default function createLogo(app) {
-	const logo = createSprite(allTextureKeys.logo);
+export default function createLogo() {
+	const app = getAppInstance();
 
-	logo.anchor.set(0.5);
-	const scaleX = app.screen.width / logo.texture.width;
-	logo.scale.set(scaleX);
-	logo.position.set(app.screen.width / 2, 100);
-	logo.label = labels.logo;
+	const logo = new PixiElement(
+		{
+			type: elementType.SPRITE,
+			texture: allTextureKeys.logo,
+			position: [app.screen.width / 2, 50],
+			anchor: [0.5],
+			scale: [0.1],
+			label: labels.logo,
+		},
+		onResizeHandler,
+		true
+	);
+	const logoElement = logo.getElement();
 
 	gsap.fromTo(
-		logo.scale,
-		{ x: 0.2, y: 0.2 }, // начальные значения
-		{
-			x: 0.5,
-			y: 0.5,
-			duration: 0.5,
-			yoyo: true,
-			ease: 'sine.inOut',
-		}
+		logoElement.scale,
+		{ x: 0.1, y: 0.1 },
+		{ x: 0.3, y: 0.3, duration: 0.5, yoyo: true, ease: 'sine.inOut' }
 	);
-	
-	const updatePosition = () => {
-		logo.position.set(app.screen.width / 2, 100);
-	};
-	
-	window.addEventListener('resize', updatePosition);
-	window.addEventListener('orientationchange', updatePosition);
 
-	return logo;
+	function onResizeHandler() {
+		logoElement.position.x = app.screen.width / 2;
+	}
+
+	return logoElement;
 }

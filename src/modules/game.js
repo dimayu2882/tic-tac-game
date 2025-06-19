@@ -9,8 +9,10 @@ import {
 	createBtnStart,
 	createContainerGameOver,
 	createLogo,
-	createPlayers, createSoundButton
+	createPlayers,
+	createSoundButton,
 } from '../ui/index.js';
+import { eventBus } from '../utils/eventBus.js';
 
 export class Game {
 	constructor(app) {
@@ -38,12 +40,12 @@ export class Game {
 		const { app } = this;
 		await this.loadAppAssets();
 
-		const logo = createLogo(app);
+		const logo = createLogo();
 		const players = createPlayers(app);
 		const btnStart = createBtnStart(app);
 		const board = createBoard(app);
 		const gameOver = createContainerGameOver(app);
-		const soundButton =  createSoundButton(app);
+		const soundButton = createSoundButton(app);
 
 		this.gameContainer.addChild(
 			logo,
@@ -55,14 +57,8 @@ export class Game {
 		);
 		app.stage.addChild(this.gameContainer);
 
-		// Даем время на инициализацию всех элементов
-		await new Promise(resolve => {
-			window.requestAnimationFrame(() => {
-				window.requestAnimationFrame(resolve);
-			});
-		});
-
-		new GameManager(app).startGame();
+		this.gameManager = new GameManager(app);
+		eventBus.emit('startGame');
 
 		return this.gameContainer;
 	};
