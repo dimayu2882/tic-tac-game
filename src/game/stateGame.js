@@ -14,6 +14,7 @@ class GameState {
 		this.currentPlayer = gameValues.cross;
 		this.isGameOver = false;
 		this.winner = null;
+		this.isMuted = false;
 	}
 
 	reset() {
