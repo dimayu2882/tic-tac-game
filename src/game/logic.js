@@ -38,10 +38,12 @@ export class GameManager {
 		eventBus.on('startGame', this.startGame);
 		eventBus.on('restartGame', this.restartGame);
 		eventBus.on('toggleSound', this.toggleSound);
+		eventBus.on('muteSound', this.toggleSound);
 
 		// Добавляем обработчики
 		this.soundButton.on('pointerdown', () => eventBus.emit('toggleSound'));
 		this.playAgainButton.on('pointerdown', () => eventBus.emit('restartGame', this.board));
+		document.addEventListener('visibilitychange', () => eventBus.emit('toggleSound'));
 	}
 
 	checkWinner() {

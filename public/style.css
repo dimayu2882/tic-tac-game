@@ -27,6 +27,7 @@ body {
 	justify-content: center;
 	align-items: center;
 	background-color: #e9e9c2;
+	overflow: hidden;
 }
 
 #pixi-container {
@@ -43,4 +44,5 @@ canvas {
 	object-fit: contain;
 	background-image: url('img/bg.svg');
 	background-size: cover;
+	overflow: hidden;
 }
