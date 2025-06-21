@@ -5,6 +5,7 @@ export default defineConfig({
 	base: './',
 	server: {
 		port: 8081,
+		host: '0.0.0.0',
 		open: true
 	},
 	build: {
