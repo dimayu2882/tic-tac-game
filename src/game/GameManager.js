@@ -5,9 +5,9 @@ import { allTextureKeys } from '../common/assets.js';
 import { gameValues, labels } from '../common/enums.js';
 import { animateContainer, createSprite, scaleTarget, getUIElement } from '../helpers/index.js';
 import { showVictoryConfetti } from '../ui/victory.js';
-import { eventBus } from '../utils/eventBus.js';
-import { soundManager } from '../utils/soundManager.js';
-import { gameState } from './stateGame.js';
+import { eventBus } from '../utils/EventBus.js';
+import { soundManager } from '../utils/SoundManager.js';
+import { gameState } from './GameState.js';
 
 export class GameManager {
 	constructor(app) {
@@ -18,10 +18,8 @@ export class GameManager {
 		const gameOver = getUIElement(gameContainer, labels.gameOver);
 		const soundButton = getUIElement(gameContainer, labels.sound);
 
-		this.gameContainer = gameContainer;
 		this.btnStart = getUIElement(gameContainer, labels.buttonStart);
 		this.board = getUIElement(gameContainer, labels.board);
-		this.players = players;
 		this.playerOne = getUIElement(players, labels.playerOne);
 		this.playerTwo = getUIElement(players, labels.playerTwo);
 		this.gameOver = gameOver;

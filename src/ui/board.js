@@ -1,6 +1,6 @@
 import { elementType, labels } from '../common/enums.js';
-import { gameState } from '../game/stateGame.js';
-import { eventBus } from '../utils/eventBus.js';
+import { gameState } from '../game/GameState.js';
+import { eventBus } from '../utils/EventBus.js';
 import { PixiElement } from '../utils/PixiElement.js';
 
 export default function createBoard(app) {

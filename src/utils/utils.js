@@ -29,7 +29,7 @@ export function getAppInstance() {
 	return app;
 }
 
-// uiFactory
+// UIFactory
 export class UIFactory {
 	static createElement(type, config) {
 		const creators = {
@@ -48,24 +48,24 @@ export class UIFactory {
 		return new Sprite(texture);
 	}
 
-	static createText(config) {
+	static createText({ text, style }) {
 		return new Text({
-			text: config.text || '',
-			style: config.style || {},
+			text: text || '',
+			style: style || {},
 		});
 	}
 
-	static createGraphics(config) {
+	static createGraphics({ roundRect, setStrokeStyle, moveTo, lineTo, fill }) {
 		const graphics = new Graphics();
-		if (config.roundRect) graphics.roundRect(...config.roundRect);
-		if (config.setStrokeStyle) graphics.setStrokeStyle(config.setStrokeStyle);
-		if (config.moveTo) graphics.moveTo(...config.moveTo);
-		if (config.lineTo) graphics.lineTo(...config.lineTo);
-		if (config.fill !== undefined) graphics.fill(config.fill);
+		if (roundRect) graphics.roundRect(...roundRect);
+		if (setStrokeStyle) graphics.setStrokeStyle(setStrokeStyle);
+		if (moveTo) graphics.moveTo(...moveTo);
+		if (lineTo) graphics.lineTo(...lineTo);
+		if (fill !== undefined) graphics.fill(fill);
 		return graphics;
 	}
 
-	static createContainer(config) {
+	static createContainer() {
 		return new Container();
 	}
 }

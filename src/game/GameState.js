@@ -10,7 +10,6 @@ class GameState {
 				value: '',
 				sprite: null,
 			}));
-
 		this.currentPlayer = gameValues.cross;
 		this.isGameOver = false;
 		this.winner = null;

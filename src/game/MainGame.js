@@ -3,7 +3,7 @@ import { Assets, Container } from 'pixi.js';
 import { appTextures } from '../common/assets.js';
 import { PRELOADER_ID } from '../common/constants.js';
 import { labels } from '../common/enums.js';
-import { GameManager } from '../game/logic.js';
+import { GameManager } from './GameManager.js';
 import {
 	createBoard,
 	createBtnStart,
@@ -12,9 +12,9 @@ import {
 	createPlayers,
 	createSoundButton,
 } from '../ui/index.js';
-import { eventBus } from '../utils/eventBus.js';
+import { eventBus } from '../utils/EventBus.js';
 
-export class Game {
+export class MainGame {
 	constructor(app) {
 		this.app = app;
 		this.preloader = document.getElementById(PRELOADER_ID);
@@ -40,20 +40,13 @@ export class Game {
 		const { app } = this;
 		await this.loadAppAssets();
 
-		const logo = createLogo();
-		const players = createPlayers(app);
-		const btnStart = createBtnStart(app);
-		const board = createBoard(app);
-		const gameOver = createContainerGameOver(app);
-		const soundButton = createSoundButton(app);
-
 		this.gameContainer.addChild(
-			logo,
-			players,
-			btnStart,
-			board,
-			gameOver,
-			soundButton
+			createLogo(),
+			createPlayers(app),
+			createBtnStart(app),
+			createBoard(app),
+			createContainerGameOver(app),
+			createSoundButton(app)
 		);
 		app.stage.addChild(this.gameContainer);
 

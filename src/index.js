@@ -1,7 +1,5 @@
-import { AppGame } from './modules/app.js';
-import { Game } from './modules/game.js';
+import { AppGame } from './modules/AppGame.js';
 
 (async () => {
-	const app = await new AppGame().createApp();
-	await new Game(app).initializeGameElements();
+	await new AppGame().initGame();
 })();
